@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerAimController : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerAimController : MonoBehaviour
     private Transform firePoint;
     [SerializeField]
     private Animator shootAnimator;
+    [SerializeField]
+    private LineRenderer lineRenderer;
 
     private Vector3 mousePosition;
     float angle;
@@ -20,9 +23,9 @@ public class PlayerAimController : MonoBehaviour
     }
 
     void Update()
-    {
+    {      
         HandleAming();
-        HandleShooting();
+        StartCoroutine( HandleShooting());
     }
     void FixedUpdate()
     {
@@ -32,8 +35,9 @@ public class PlayerAimController : MonoBehaviour
     private void HandleAming()
     {
         mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
-       
-        Vector3 lookDirection = (mousePosition - transform.position).normalized;
+
+        Vector3 normalized = (mousePosition - transform.position).normalized;
+        Vector3 lookDirection = normalized;
         angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         aimObject.eulerAngles = new Vector3(0, 0, angle);
 
@@ -53,11 +57,32 @@ public class PlayerAimController : MonoBehaviour
         transform.localScale = playerScale;
     }
 
-    private void HandleShooting()
+    private IEnumerator HandleShooting()
     {
         if(Input.GetMouseButtonDown(0))
         {
             shootAnimator.SetTrigger("shoot");
+
+            RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
+
+            if (hitInfo)
+            {
+                // hitInfo.transform..GetComponent<Enemy>();
+                Debug.Log(hitInfo.transform.name);
+               lineRenderer.SetPosition(0, firePoint.position);
+               lineRenderer.SetPosition(1,hitInfo.point);
+            }
+            else
+            {
+                lineRenderer.SetPosition(0, firePoint.position);
+                lineRenderer.SetPosition(1, firePoint.right + firePoint.right * 100);
+            }
+            lineRenderer.enabled = true;
+
+            yield return new WaitForSeconds(0.02f); 
+
+            lineRenderer.enabled = false;
+             
         }
     }
 }
