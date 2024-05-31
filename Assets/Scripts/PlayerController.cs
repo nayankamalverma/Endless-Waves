@@ -11,11 +11,9 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     private Vector2 movement;
-    Vector3 scale;
     
     void Start()
     {
-       scale = transform.localScale;
     }
      
     void Update()
@@ -23,6 +21,11 @@ public class PlayerController : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         movement = movement.normalized;
+        float speed = movement.magnitude;
+        if(animator != null )
+        {
+            animator.SetFloat("speed", speed);
+        }
     }
 
     void FixedUpdate()
@@ -31,4 +34,5 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = Vector2.Lerp(rb.velocity, targetVelocity, 0.25f);
     }
+
 }
