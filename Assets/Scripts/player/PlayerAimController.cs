@@ -67,8 +67,9 @@ public class PlayerAimController : MonoBehaviour
 
             if (hitInfo)
             {
-                // hitInfo.transform..GetComponent<Enemy>();
-                Debug.Log(hitInfo.transform.name);
+                Enemy enemy = hitInfo.transform.GetComponent<Enemy>();
+                enemy.TakeDamage();
+                
                lineRenderer.SetPosition(0, firePoint.position);
                lineRenderer.SetPosition(1,hitInfo.point);
             }
