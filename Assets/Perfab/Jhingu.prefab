@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 3035921389374951671}
   - component: {fileID: 76183767694229137}
   - component: {fileID: 196807430671894609}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Jhingu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1374613345319963467
 Transform:
   m_ObjectHideFlags: 0
@@ -103,7 +103,8 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   speed: 4
   enemyHeath: 0
-  damage: 20
+  damage: 10
+  blood: {fileID: 6683385348526474697, guid: 6363b800eb26c134782a98c7957fdba2, type: 3}
 --- !u!70 &76183767694229137
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

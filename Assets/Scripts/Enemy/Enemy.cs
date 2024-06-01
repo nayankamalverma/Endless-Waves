@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -14,6 +11,8 @@ public class Enemy : MonoBehaviour
     private int enemyHeath;
     [SerializeField]
     private int damage=10;
+    [SerializeField]
+    private GameObject blood;
 
 
     private float stoppingDistance = 1.0f; // Distance to stop from the player
@@ -72,25 +71,22 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            // Perform attack logic here
-            Debug.Log("Enemy attacks!");
-            playerHealth.TakeDamge(damage);
+            PlayerHealth playerHealth = GameManager.Instance.GetPlayerHealth();
+            if(playerHealth != null)
+            {
+                playerHealth.TakeDamge(damage);
+            }
 
- //           PlayerHealth playerHealth = GameManager.Instance.GetPlayerHealth();
-//if (playerHealth != null)
- //           {
-//playerHealth.TakeDamge(damage);
-//            }
-
-            // Update the last attack time
             lastAttackTime = Time.time;
         }
     }
 
     public void TakeDamage()
     {
+        Instantiate(blood,new Vector3(transform.position.x,transform.position.y, -4f), blood.transform.rotation);
         enemyHeath -= 1;
         if (enemyHeath <= 0) { 
+            UiManager.Instance.UpdateScore();
             Destroy(gameObject);
         }
     }
