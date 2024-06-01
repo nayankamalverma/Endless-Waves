@@ -8,12 +8,17 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     [SerializeField]
     private EnemySpawn enemySpawn;
-
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
+    [SerializeField]
+    private UiManager uiManager;
+    
+    
     private PlayerController playerController;
     private PlayerHealth playerHealth;
-
+    private PlayerAimController playerAimController;
+    
+    private static GameManager instance;
+    public static GameManager Instance { get { return instance; } }
+    
     private void Awake()
     {
         //singleton pattern
@@ -25,18 +30,45 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
     
     void Start()
     {
         playerController = player.GetComponent<PlayerController>();
         playerHealth = player.GetComponent<PlayerHealth>();
+        playerAimController = player.GetComponent<PlayerAimController>();
     }
-    
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            GamePause();
+        }
+        
+    }
+
+    public void GamePause()
+    {
+        enemySpawn.PauseEnemies();
+        enemySpawn.enabled = false;
+        playerAimController.enabled = false;
+        playerController.enabled = false ;
+    }
+
+    public void GameResume()
+    {
+        enemySpawn.ResumeEnemies();
+        enemySpawn.enabled = true;
+        playerController.enabled = true ;
+        playerAimController.enabled = true;
+    }
+
     public void GameOver()
     {
         playerController.enabled = false;
+        playerAimController.enabled = false;
+        enemySpawn.PauseEnemies();
         enemySpawn.enabled = false;
     }
 
@@ -44,6 +76,9 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public UiManager GetUiManager() { return uiManager; }
+
     public PlayerHealth GetPlayerHealth()
     {
         return playerHealth;
@@ -54,8 +89,9 @@ public class GameManager : MonoBehaviour
         return playerController;
     }
 
-    public Transform getPlayerTransform()
+    public Transform GetPlayerTransform()
     {
         return player.transform;
     }
+
 }

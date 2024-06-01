@@ -13,10 +13,14 @@ public class PlayerAimController : MonoBehaviour
     private Animator shootAnimator;
     [SerializeField]
     private LineRenderer lineRenderer;
+    [SerializeField]
+    private GameObject line;
 
     private Vector3 mousePosition;
     float angle;
     Vector3 playerScale;
+
+
     void Start()
     {
         playerScale = transform.localScale;
@@ -36,7 +40,7 @@ public class PlayerAimController : MonoBehaviour
     {
         mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
-        Vector3 normalized = (mousePosition - transform.position).normalized;
+        Vector3 normalized = (mousePosition - aimObject.position).normalized;
         Vector3 lookDirection = normalized;
         angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         aimObject.eulerAngles = new Vector3(0, 0, angle);
@@ -61,6 +65,7 @@ public class PlayerAimController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
+            line.SetActive(true);
             shootAnimator.SetTrigger("shoot");
 
             RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
@@ -71,12 +76,12 @@ public class PlayerAimController : MonoBehaviour
                 enemy.TakeDamage();
                 
                lineRenderer.SetPosition(0, firePoint.position);
-               lineRenderer.SetPosition(1,hitInfo.point);
+               lineRenderer.SetPosition(1, hitInfo.point);
             }
             else
             {
                 lineRenderer.SetPosition(0, firePoint.position);
-                lineRenderer.SetPosition(1, firePoint.right + firePoint.right * 100);
+                lineRenderer.SetPosition(1, firePoint.position + firePoint.right *100);
             }
             lineRenderer.enabled = true;
 

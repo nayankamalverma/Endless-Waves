@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.Collections.AllocatorManager;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class PlayerHealth : MonoBehaviour
     private Transform healthBar;
     [SerializeField]
     private Slider healthSlider;
+    [SerializeField]
+    private Animator animator;
+    [SerializeField]
+    private GameObject blood;
 
     private int maxHealth = 100;
     private int currentHealth;
@@ -14,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         SetMaxHealth(maxHealth);
+        blood.GetComponent<ParticleSystem>().startColor = Color.red;
     }
 
     private void Update()
@@ -34,8 +40,8 @@ public class PlayerHealth : MonoBehaviour
         if(currentHealth <= 0) {
             GameOver();
         }
+        Instantiate(blood, new Vector3(transform.position.x, transform.position.y, -4f), blood.transform.rotation);
     }
-
     public void SetMaxHealth(int health)
     {   
         currentHealth = maxHealth;
@@ -55,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void GameOver()
     {
-
+        animator.SetTrigger("death");
+        GameManager.Instance.GameOver();
     }
 }

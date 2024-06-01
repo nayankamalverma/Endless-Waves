@@ -4,14 +4,18 @@ public class EnemySpawn : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] enemyPrefab;
-    public float spawnRate = 4f; // How often to spawn an enemy
-    public float spawnRadius = 80f; // Radius around the spawner where enemies can appear
-
-    private float nextSpawnTime;
     [SerializeField]
     private float currentSpawnRate;
+    [SerializeField]
+    private Transform enemyParent;
+    [SerializeField]
+    private int enemyPerSpawn=2;
+    
+    public float spawnRate = 4f; // How often to spawn an enemy
+    public float spawnRadius = 80f; // Radius around the spawner where enemies can appear
     private float minimumSpawnRate = 1.5f;
     private float rateDecay = 0.001f;
+    private float nextSpawnTime;
 
     void Start()
     {
@@ -24,13 +28,10 @@ public class EnemySpawn : MonoBehaviour
     }
 
     void Update()
-    {
-        
-        // Check if it's time to spawn a new enemy
+    {  
         if (Time.time >= nextSpawnTime)
         {
-            SpawnEnemy();
-            SpawnEnemy();
+            for (int i = 0; i < enemyPerSpawn; i++) SpawnEnemy();
             nextSpawnTime = Time.time + currentSpawnRate; // Reset the next spawn time
         }
     }
@@ -41,11 +42,26 @@ public class EnemySpawn : MonoBehaviour
         Vector2 spawnPosition = new Vector2(
             Mathf.Cos(angle),
             Mathf.Sin(angle)
-        ) * spawnRadius + (Vector2)transform.position;
+        ) * spawnRadius + (Vector2)enemyParent.position;
 
         int enemyIndex = Random.Range(0, enemyPrefab.Length);
-        GameObject enemy =  Instantiate(enemyPrefab[enemyIndex], spawnPosition, Quaternion.identity);
+        GameObject enemy =  Instantiate(enemyPrefab[enemyIndex], spawnPosition, Quaternion.identity , enemyParent);
         enemy.SetActive(true);
-        Debug.Log("Enemy spawned at: " + spawnPosition);
+    }
+
+    public void PauseEnemies()
+    {
+        foreach(Transform child in enemyParent)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    public void ResumeEnemies()
+    {
+        foreach (Transform child in enemyParent)
+        {
+            child.gameObject.SetActive(true);
+        }
     }
 }
