@@ -22,17 +22,11 @@ public class PlayerHealth : MonoBehaviour
         blood.GetComponent<ParticleSystem>().startColor = Color.red;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamge(20);
-        }
-    }
     private void LateUpdate()
     {
         healthBar.position = transform.position;
     }
+
     public void TakeDamge(int health)
     {
         currentHealth -= health;
