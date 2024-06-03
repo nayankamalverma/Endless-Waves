@@ -56,6 +56,6 @@ public class PlayerHealth : MonoBehaviour
     public void GameOver()
     {
         animator.SetTrigger("death");
-        GameManager.Instance.GameOver();
+        UiManager.Instance.GameOver();
     }
 }

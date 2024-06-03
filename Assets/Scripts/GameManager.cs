@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         playerAimController = player.GetComponent<PlayerAimController>();
     }
 
+   
+
     public void GamePause()
     {
         enemySpawn.PauseEnemies();
@@ -65,6 +67,11 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ReturnMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public UiManager GetUiManager() { return uiManager; }

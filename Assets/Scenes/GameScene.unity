@@ -593,6 +593,7 @@ GameObject:
   - component: {fileID: 141990575}
   - component: {fileID: 141990577}
   - component: {fileID: 141990576}
+  - component: {fileID: 141990578}
   m_Layer: 5
   m_Name: GameOverMenu
   m_TagString: Untagged
@@ -658,6 +659,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141990574}
   m_CullTransparentMesh: 1
+--- !u!114 &141990578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141990574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680d28e9da5cb3f4f911a30d296e4689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  restart: {fileID: 1349697111}
+  mainMenu: {fileID: 1376211603}
+  highScore: {fileID: 180889658}
+  kills: {fileID: 1818235811}
 --- !u!1 &159390338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1723,8 +1740,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreManager: {fileID: 551157575}
-  pauseMenu: {fileID: 0}
-  gameOverMenu: {fileID: 0}
+  pauseMenu: {fileID: 604727007}
+  gameOverMenu: {fileID: 141990574}
 --- !u!1 &604727007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,6 +1753,7 @@ GameObject:
   - component: {fileID: 604727008}
   - component: {fileID: 604727010}
   - component: {fileID: 604727009}
+  - component: {fileID: 604727011}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -1801,6 +1819,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604727007}
   m_CullTransparentMesh: 1
+--- !u!114 &604727011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604727007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8f6bad2a5a8474c8a9d1d2a27cd90b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resume: {fileID: 1852638310}
+  restart: {fileID: 1592717703}
+  mainMenu: {fileID: 2063849230}
+  highScore: {fileID: 1342069815}
 --- !u!1 &636928229
 GameObject:
   m_ObjectHideFlags: 0
@@ -3811,8 +3845,8 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 0.6933962, b: 0.702688, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.9607844, g: 0.9607844, b: 0.9607844, a: 1}
+    m_SelectedColor: {r: 1, g: 0.69411767, b: 0.7019608, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

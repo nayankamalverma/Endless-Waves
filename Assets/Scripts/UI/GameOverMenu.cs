@@ -1,18 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Button restart;
+    [SerializeField]
+    private Button mainMenu;
+
+    [SerializeField]
+    private TextMeshProUGUI highScore;
+    [SerializeField]
+    private TextMeshProUGUI kills;
+
+    private void Awake()
     {
-        
+        restart.onClick.AddListener(Restart);
+        mainMenu.onClick.AddListener(LoadMainMenu);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        kills.text = "Kills : "+UiManager.Instance.GetKills();
+        highScore.text = "Highest Kills : "+ UiManager.Instance.GetHighScore();
     }
+    private void Restart()
+    {
+        GameManager.Instance.Restart();
+    }
+
+    private void LoadMainMenu()
+    {
+        GameManager.Instance.ReturnMainMenu();
+    }
+    
 }
