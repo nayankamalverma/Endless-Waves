@@ -10,8 +10,7 @@ public class GameManager : MonoBehaviour
     private EnemySpawn enemySpawn;
     [SerializeField]
     private UiManager uiManager;
-    
-    
+
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     private PlayerAimController playerAimController;
@@ -37,15 +36,6 @@ public class GameManager : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         playerHealth = player.GetComponent<PlayerHealth>();
         playerAimController = player.GetComponent<PlayerAimController>();
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            GamePause();
-        }
-        
     }
 
     public void GamePause()

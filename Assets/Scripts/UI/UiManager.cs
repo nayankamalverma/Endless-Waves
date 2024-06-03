@@ -5,6 +5,12 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private ScoreManager _scoreManager;
 
+
+    [SerializeField]
+    private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject gameOverMenu;
+
     private static UiManager instance;
     public static UiManager Instance { get { return instance; } }
 
@@ -21,6 +27,10 @@ public class UiManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        
+    }
 
     public void UpdateScore()
     {
