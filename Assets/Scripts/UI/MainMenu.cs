@@ -21,20 +21,24 @@ public class MainMenu : MonoBehaviour
 
     private void PlayGame()
     {
+        SoundManger.Instance.Play(Sounds.ButtonClick);
         SceneManager.LoadScene(1);
     }
 
     private void ActivateHelpMenu()
     {
+        SoundManger.Instance.Play(Sounds.ButtonClick);
         helpMenu.SetActive(true);
     }
     private void DeactivateHelpMenu()
     {
+        SoundManger.Instance.Play(Sounds.ButtonClick);
         helpMenu.SetActive(false);
     }
 
     private void ExitGame()
     {
+        SoundManger.Instance.Play(Sounds.ButtonClick);
         Application.Quit();
     }
 }

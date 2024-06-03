@@ -65,6 +65,8 @@ public class PlayerAimController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
+            SoundManger.Instance.Play(Sounds.Shoot);
+
             line.SetActive(true);
             shootAnimator.SetTrigger("shoot");
 
