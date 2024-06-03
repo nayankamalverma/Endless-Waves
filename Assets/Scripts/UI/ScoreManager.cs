@@ -17,5 +17,7 @@ public class ScoreManager : MonoBehaviour
         kills++;
         scoreText.text = "Kills : " + kills;
     }
+
+    public int GetScore() {  return kills; }
 }
 
