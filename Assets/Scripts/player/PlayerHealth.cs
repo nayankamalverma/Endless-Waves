@@ -55,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void GameOver()
     {
+        SoundManger.Instance.Play(Sounds.GameOver);
         animator.SetTrigger("death");
         UiManager.Instance.GameOver();
     }
