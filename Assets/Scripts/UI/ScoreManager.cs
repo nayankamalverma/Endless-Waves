@@ -6,10 +6,16 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private int kills;
+    private int highScore;
 
     private void Awake()
     {
-        kills = 0;
+        PlayerPrefs.GetInt("Kills", 0);
+    }
+
+    private void OnEnable()
+    {
+        highScore = PlayerPrefs.GetInt("Kills");
     }
 
     public void UpdateScore()
@@ -18,6 +24,22 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Kills : " + kills;
     }
 
-    public int GetScore() {  return kills; }
+    public string GetScore() {  return kills.ToString(); }
+    public int GetHighScore() { return PlayerPrefs.GetInt("Kills"); }
+    private void SavePrefs()
+    {
+        PlayerPrefs.Save();
+    }
+
+    public void UpdateHighScore()
+    {
+        if (highScore < kills)
+        {
+            highScore = kills;
+            PlayerPrefs.SetInt("Kills",highScore);
+        }
+        SavePrefs();
+    }
+
 }
 
