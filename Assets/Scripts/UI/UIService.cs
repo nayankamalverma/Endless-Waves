@@ -1,6 +1,7 @@
+using Assets.Scripts.Utilities.Events;
 using UnityEngine;
 
-public class UiManager : MonoBehaviour
+public class UIService : MonoBehaviour
 {
     [SerializeField]
     private ScoreManager _scoreManager;
@@ -11,21 +12,7 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     private GameObject gameOverMenu;
 
-    private static UiManager instance;
-    public static UiManager Instance { get { return instance; } }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(instance);
-        }
-
-    }
+    private EventService eventService;
 
     private void Update()
     {
@@ -34,6 +21,11 @@ public class UiManager : MonoBehaviour
             GamePause();
         }
         
+    }
+
+    public void SetService(EventService eventService)
+    {
+        this.eventService = eventService;
     }
 
     public void UpdateScore()
@@ -50,19 +42,19 @@ public class UiManager : MonoBehaviour
     public void GamePause()
     {
         pauseMenu.SetActive(true);
-        GameManager.Instance.GamePause();
+        //GameManager.Instance.GamePause();
     }
 
     public void GameResume()
     {
         pauseMenu.SetActive(false);
-        GameManager.Instance.GameResume();
+        //GameManager.Instance.GameResume();
     }
 
     public void GameOver()
     {
         _scoreManager.UpdateHighScore();
         gameOverMenu.SetActive(true);
-        GameManager.Instance.GameOver();
+        //GameManager.Instance.GameOver();
     }
 }

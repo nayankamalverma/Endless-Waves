@@ -22,17 +22,17 @@ public class GameOverMenu : MonoBehaviour
 
     private void OnEnable()
     {
-        kills.text = "Kills : "+UiManager.Instance.GetKills();
-        highScore.text = "Highest Kills : "+ UiManager.Instance.GetHighScore();
+      //  kills.text = "Kills : "+UIService.Instance.GetKills();
+     //   highScore.text = "Highest Kills : "+ UIService.Instance.GetHighScore();
     }
     private void Restart()
     {
-        GameManager.Instance.Restart();
+       // GameManager.Instance.Restart();
     }
 
     private void LoadMainMenu()
     {
-        GameManager.Instance.ReturnMainMenu();
+       // GameManager.Instance.ReturnMainMenu();
     }
     
 }

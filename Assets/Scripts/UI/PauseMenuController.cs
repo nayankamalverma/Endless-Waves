@@ -20,21 +20,21 @@ public class PauseMenuController : MonoBehaviour
 
     private void OnEnable()
     {
-        highScore.text = "Highest Kills : " + UiManager.Instance.GetHighScore();
+       // highScore.text = "Highest Kills : " + UIService.Instance.GetHighScore();
     }
 
     private void Resume()
     {
-        UiManager.Instance.GameResume();
+       // UIService.Instance.GameResume();
     }
 
     private void ReturnMainMenu()
     {
-        GameManager.Instance.ReturnMainMenu();
+       // GameManager.Instance.ReturnMainMenu();
     }
 
     private void Restart()
     {
-        GameManager.Instance.Restart();
+        //GameManager.Instance.Restart();
     }
 }

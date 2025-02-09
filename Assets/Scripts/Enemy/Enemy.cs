@@ -4,7 +4,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private Transform player; // Reference to the player's transform
-    [SerializeField] private PlayerHealth playerHealth;
     [SerializeField]
     private float speed = 2.0f; // Speed at which the enemy moves
     [SerializeField]
@@ -71,12 +70,7 @@ public class Enemy : MonoBehaviour
     {
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            PlayerHealth playerHealth = GameManager.Instance.GetPlayerHealth();
-            if(playerHealth != null)
-            {
-                playerHealth.TakeDamge(damage);
-            }
-
+            //reduce player health
             lastAttackTime = Time.time;
         }
     }
@@ -86,7 +80,7 @@ public class Enemy : MonoBehaviour
         Instantiate(blood,new Vector3(transform.position.x,transform.position.y, -4f), blood.transform.rotation);
         enemyHeath -= 1;
         if (enemyHeath <= 0) { 
-            UiManager.Instance.UpdateScore();
+            //UIService.Instance.UpdateScore();
             Destroy(gameObject);
         }
     }
