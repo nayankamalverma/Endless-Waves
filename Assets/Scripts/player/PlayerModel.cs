@@ -2,17 +2,22 @@
 {
     public class PlayerModel
     {
-        private float moveSpeed;
-        private int maxHealth = 100;
+        PlayerScriptableObject playerSO;
         private int currentHealth;
 
-        public PlayerModel()
+        public PlayerModel(PlayerScriptableObject playerSO)
         {
-            currentHealth = maxHealth;
+            this.playerSO = playerSO;
+            currentHealth = playerSO.maxHealth;
         }
 
-        public float GetMoveSpeed() => moveSpeed;
-        public int GetMaxHealth() => maxHealth;
+        public float GetMoveSpeed() => playerSO.moveSpeed;
+        
+        public int GetMaxHealth() => playerSO.maxHealth;
+
         public int GetCurrentHealth() => currentHealth;
+        public void ReduceHealth(int health) => currentHealth -= health;
+        public void Heal(int health) => currentHealth += health;
+        public void SetCurrentHealthToMax() => currentHealth = playerSO.maxHealth;
     }
 }

@@ -6,9 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    #region references
+    //playerService
     [SerializeField] 
     private PlayerView player;
+    [SerializeField]
+    private PlayerScriptableObject playerSO;
+    #endregion
 
     #region Services
     private EventService EventService;
@@ -21,9 +25,9 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         EventService = new EventService();
-        UIService = new UIService();
-        PlayerService = new PlayerService(EventService,player);
-        EnemyService = new EnemyService();
+        //UIService = new UIService();
+        PlayerService = new PlayerService(EventService, playerSO, player);
+        //EnemyService = new EnemyService();
     }
 
 }

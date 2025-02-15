@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Utilities.Events;
+using UnityEngine;
 
 namespace Assets.Scripts.player
 {
@@ -7,15 +8,15 @@ namespace Assets.Scripts.player
         private PlayerController controller;
         private EventService eventService;
 
-        public PlayerService(EventService eventService, PlayerView playerView)
+        public PlayerService(EventService eventService, PlayerScriptableObject playerSO, PlayerView playerView)
         {
             this.eventService = eventService;
-            CreatePlayer(playerView);
+            CreatePlayer(playerSO,playerView);
         }
 
-        private void CreatePlayer(PlayerView playerView)
+        private void CreatePlayer(PlayerScriptableObject playerSO, PlayerView playerView)
         {
-            controller = new PlayerController(playerView);
+            controller = new PlayerController(playerSO, playerView);
         }
     }
 }

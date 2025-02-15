@@ -12,95 +12,98 @@ namespace Assets.Scripts.player
         private PlayerView playerView;
         private PlayerModel playerModel;        
 
-        public PlayerController(PlayerView playerView)
+        public PlayerController(PlayerScriptableObject playerSO, PlayerView playerView)
         {
             this.playerView = playerView;
-            playerModel = new PlayerModel();
+            playerView.SetPlayerController(this);
+            playerModel = new PlayerModel(playerSO);
         }
-/*
+
         public void Start()
         {
-            SetMaxHealth(maxHealth);
-            blood.GetComponent<ParticleSystem>().startColor = Color.red;
-            playerScale = transform.localScale;
+            SetMaxHealth();
+            playerScale = playerView.GetPlayerTransform().localScale;
         }
 
         public void Update()
         {
-
-
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
             movement = movement.normalized;
             float speed = movement.magnitude;
-            
-            playerView..SetFloat("speed", speed);
+
+            playerView.GetAnimator().SetFloat("speed", speed);
             //shooting
 
-            HandleAming();
-            StartCoroutine(HandleShooting());
+            HandleAim();
+            playerView.ShootingLine();
 
         }
 
         public void FixedUpdate()
         {
-            Vector2 targetVelocity = movement * moveSpeed;
+            Vector2 targetVelocity = movement * playerModel.GetMoveSpeed();
 
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, 0.25f);
+            playerView.GetRigidBody().linearVelocity = Vector2.Lerp(playerView.GetRigidBody().linearVelocity, targetVelocity, 0.25f);
         }
 
         #region health
         public void LateUpdate()
         {
-            healthBar.position = rb.position;
+            playerView.GetHealthBar().position = playerView.GetRigidBody().position;
         }
 
         public void TakeDamage(int health)
         {
-            currentHealth -= health;
-            healthSlider.value = currentHealth;
-            if (currentHealth <= 0)
+            playerModel.ReduceHealth(health);
+            UpdateHealthSlider();
+            if (playerModel.GetCurrentHealth() <= 0)
             {
-                // GameOver();
+                GameOver();
             }
-            //Instantiate(blood, new Vector3(transform.position.x, transform.position.y, -4f), blood.transform.rotation);
+            GameObject.Instantiate(playerView.GetBloodParticle(), new Vector3(playerView.GetPlayerTransform().position.x, playerView.GetPlayerTransform().position.y, -4f), playerView.GetBloodParticle().transform.rotation);
         }
 
-        public void SetMaxHealth(int health)
+
+        public void SetMaxHealth()
         {
-            currentHealth = maxHealth;
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = health;
+            playerModel.SetCurrentHealthToMax();
+            playerView.GetHealthSlider().maxValue = playerModel.GetMaxHealth();
+            UpdateHealthSlider();
         }
 
         public void Heal(int hp)
         {
-            currentHealth += hp;
-            if (currentHealth > maxHealth)
+            playerModel.Heal(hp);
+            if (playerModel.GetCurrentHealth() > playerModel.GetMaxHealth())
             {
-                currentHealth = maxHealth;
+                playerModel.SetCurrentHealthToMax();
             }
-            healthSlider.value = currentHealth;
+            UpdateHealthSlider();
+        }
+
+        private void UpdateHealthSlider()
+        {
+            playerView.GetHealthSlider().value = playerModel.GetCurrentHealth();
         }
 
         public void GameOver()
         {
             SoundManger.Instance.Play(Sounds.GameOver);
-            animator.SetTrigger("death");
-            //UIService.Instance.GameOver();
+            playerView.GetAnimator().SetTrigger("death");
         }
         #endregion
 
         #region shooting
 
-        private void HandleAming()
+        private void HandleAim()
         {
-            mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition = playerView.GetCamera().ScreenToWorldPoint(Input.mousePosition);
 
-            Vector3 normalized = (mousePosition - aimObject.position).normalized;
+            Vector3 normalized = (mousePosition - playerView.GetAimObject().position).normalized;
             Vector3 lookDirection = normalized;
             angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-            aimObject.eulerAngles = new Vector3(0, 0, angle);
+            playerView.GetAimObject().eulerAngles = new Vector3(0, 0, angle);
 
             Vector3 aimScale = Vector3.one;
             if (angle > 90 || angle < -90)
@@ -114,43 +117,11 @@ namespace Assets.Scripts.player
                 aimScale = Vector3.one;
                 playerScale.x = Mathf.Abs(playerScale.x);
             }
-            aimObject.localScale = aimScale;
-            transform.localScale = playerScale;
+            playerView.GetAimObject().localScale = aimScale;
+            playerView.GetPlayerTransform().localScale = playerScale;
         }
 
-        private IEnumerator HandleShooting()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SoundManger.Instance.Play(Sounds.Shoot);
-
-                line.SetActive(true);
-                shootAnimator.SetTrigger("shoot");
-
-                RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
-
-                if (hitInfo.transform.CompareTag("enemy"))
-                {
-                    Enemy enemy = hitInfo.transform.GetComponent<Enemy>();
-                    enemy.TakeDamage();
-
-                    lineRenderer.SetPosition(0, firePoint.position);
-                    lineRenderer.SetPosition(1, hitInfo.point);
-                }
-                else
-                {
-                    lineRenderer.SetPosition(0, firePoint.position);
-                    lineRenderer.SetPosition(1, firePoint.position + firePoint.right * 100);
-                }
-                lineRenderer.enabled = true;
-
-                yield return new WaitForSeconds(0.02f);
-
-                lineRenderer.enabled = false;
-
-            }
-        }
+        
         #endregion
-*/
     }
 }
