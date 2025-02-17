@@ -1,5 +1,6 @@
+using Assets.Scripts.Utilities.Events;
+using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -9,20 +10,40 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button exit;
     [SerializeField] private GameObject helpMenu;
     [SerializeField] private Button cross;
+    [SerializeField] private TextMeshProUGUI highScoreText;
+
+    private int highScore;
+    EventService eventService;
+
+    public void SetServices(EventService eventService)
+    {
+        this.eventService = eventService;
+    }
 
     private void Awake()
     {
         play.onClick.AddListener(PlayGame);
         instructions.onClick.AddListener(ActivateHelpMenu);
         exit.onClick.AddListener(ExitGame);
-
         cross.onClick.AddListener(DeactivateHelpMenu);
+    }
+
+    private void OnEnable()
+    {
+        UpdateHighScoreText();
+    }
+
+    private void UpdateHighScoreText()
+    {
+        highScore = PlayerPrefs.GetInt("Kills",0);
+        highScoreText.text = "High Score: " + highScore.ToString();
     }
 
     private void PlayGame()
     {
         SoundManger.Instance.Play(Sounds.ButtonClick);
-        SceneManager.LoadScene(1);
+        eventService.OnGameStart.Invoke();
+        gameObject.SetActive(false);
     }
 
     private void ActivateHelpMenu()

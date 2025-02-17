@@ -57,43 +57,27 @@ namespace Assets.Scripts.player
 		   playerController.FixedUpdate();
 		}
 
-		public Transform GetPlayerTransform()=> transform;
+        private void LateUpdate()
+        {
+            playerController.LateUpdate();
+        }
+
+        public Transform GetPlayerTransform()=> transform;
 		public Rigidbody2D GetRigidBody() => rigidbody;
         public Animator GetAnimator() => animator;
+		public Animator GetGunAnimator() => gunAnimator;
 
         public Camera GetCamera() => _camera;
         public Transform GetAimObject() => aimObject;
+		public Transform GetFirePoint() => firePoint;
+        public LineRenderer GetLineRenderer() => lineRenderer;
+        public GameObject GetLine() => line;
+        public LayerMask GetEnemyLayer() => enemyLayer;
 
         public Transform GetHealthBar() => healthBar;
         public Slider GetHealthSlider() => healthSlider;
         public ParticleSystem GetBloodParticle() => bloodParticle;
 
-        public void ShootingLine()
-        {
-            if (Input.GetMouseButtonDown(0)) StartCoroutine(HandleShooting());
-        }
-
-        private IEnumerator HandleShooting()
-        {
-            gunAnimator.SetTrigger("shoot");
-
-            lineRenderer.enabled = true;
-            line.SetActive(true);
-
-            RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right, Mathf.Infinity, enemyLayer);
-            Vector3 endPoint = hitInfo ? hitInfo.point : (firePoint.position + firePoint.right * 100);
-
-            lineRenderer.SetPositions(new Vector3[] { firePoint.position, endPoint });
-
-            if (hitInfo.collider != null && hitInfo.transform.CompareTag("enemy"))
-            {
-                // hitInfo.transform.GetComponent<Enemy>()?.TakeDamage(); // Uncomment if needed
-            }
-
-            yield return new WaitForSeconds(0.02f);
-
-            lineRenderer.enabled = false;
-        }
 
     }
 

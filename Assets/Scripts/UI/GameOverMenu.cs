@@ -1,3 +1,4 @@
+using Assets.Scripts.Utilities.Events;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,14 @@ public class GameOverMenu : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI highScore;
     [SerializeField]
-    private TextMeshProUGUI kills;
+    private TextMeshProUGUI killsText;
+
+    EventService eventService;
+
+    public void SetServices(EventService eventService)
+    {
+        this.eventService = eventService;
+    }
 
     private void Awake()
     {
@@ -22,17 +30,20 @@ public class GameOverMenu : MonoBehaviour
 
     private void OnEnable()
     {
-      //  kills.text = "Kills : "+UIService.Instance.GetKills();
-     //   highScore.text = "Highest Kills : "+ UIService.Instance.GetHighScore();
+        highScore.text = "Highest Kills : "+ PlayerPrefs.GetInt("Kills");
+    }
+
+    public void UpdateKills(int kills){
+        killsText.text = "Kills : " + kills;
     }
     private void Restart()
     {
-       // GameManager.Instance.Restart();
+       eventService.OnGameStart.Invoke();
     }
 
     private void LoadMainMenu()
     {
-       // GameManager.Instance.ReturnMainMenu();
+       eventService.OnMainMenuButtonClicked.Invoke();
     }
-    
+
 }
