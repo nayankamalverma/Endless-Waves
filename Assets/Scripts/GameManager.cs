@@ -1,94 +1,50 @@
+using System.Collections.Generic;
+using Assets.Scripts.Enemy;
+using Assets.Scripts.LevelService;
+using Assets.Scripts.player;
+using Assets.Scripts.Utilities.Events;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
+    #region references
+    //playerService
+    [SerializeField] 
+    private PlayerView player;
     [SerializeField]
-    private GameObject player;
-    [SerializeField]
-    private EnemySpawn enemySpawn;
-    [SerializeField]
-    private UiManager uiManager;
+    private PlayerScriptableObject playerSO;
 
-    private PlayerController playerController;
-    private PlayerHealth playerHealth;
-    private PlayerAimController playerAimController;
-    
-    private static GameManager instance;
-    public static GameManager Instance { get { return instance; } }
-    
+    //Enemy Service
+    [SerializeField]
+    private List<EnemyScriptableObjects> enemyList;
+    [SerializeField]
+    private Transform enemyParent;
+
+    //Level Service
+    [SerializeField]
+    private int baseEnemyCount;
+    [SerializeField]
+    private float baseSpawnInterval;
+
+    #endregion
+
+    #region Services
+    private EventService EventService;
+    private PlayerService PlayerService;
+    private EnemyService EnemyService;
+    private LevelService LevelService;
+    [SerializeField]private UIService UIService;
+    #endregion
+
+
     private void Awake()
     {
-        //singleton pattern
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-    
-    void Start()
-    {
-        playerController = player.GetComponent<PlayerController>();
-        playerHealth = player.GetComponent<PlayerHealth>();
-        playerAimController = player.GetComponent<PlayerAimController>();
-    }
+        EventService = new EventService();
+        PlayerService = new PlayerService(EventService, playerSO, player);
+        EnemyService = new EnemyService( EventService, enemyList,enemyParent, player);
+        LevelService = new LevelService(EventService, baseEnemyCount,baseSpawnInterval);
 
-   
-
-    public void GamePause()
-    {
-        enemySpawn.PauseEnemies();
-        enemySpawn.enabled = false;
-        playerAimController.enabled = false;
-        playerController.enabled = false ;
-    }
-
-    public void GameResume()
-    {
-        enemySpawn.ResumeEnemies();
-        enemySpawn.enabled = true;
-        playerController.enabled = true ;
-        playerAimController.enabled = true;
-    }
-
-    public void GameOver()
-    {
-        playerController.enabled = false;
-        playerAimController.enabled = false;
-        enemySpawn.PauseEnemies();
-        enemySpawn.enabled = false;
-    }
-
-    public void Restart()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    public void ReturnMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-
-    public UiManager GetUiManager() { return uiManager; }
-
-    public PlayerHealth GetPlayerHealth()
-    {
-        return playerHealth;
-    }
-
-    public PlayerController GetPlayerController()
-    {
-        return playerController;
-    }
-
-    public Transform GetPlayerTransform()
-    {
-        return player.transform;
+        UIService.SetService(EventService);
     }
 
 }

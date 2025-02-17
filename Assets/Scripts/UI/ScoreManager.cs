@@ -1,45 +1,47 @@
+using Assets.Scripts.Utilities.Events;
 using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI scoreText;
+	private int highScore;
+	EventService eventService;
 
-    private int kills;
-    private int highScore;
+	private void Awake()
+	{
+		 highScore = PlayerPrefs.GetInt("Kills", 0);
+	}
 
-    private void Awake()
-    {
-        PlayerPrefs.GetInt("Kills", 0);
-    }
+	public void SetService(EventService eventService)
+	{
+        this.eventService = eventService;
+        AddEventListeners();
+	}
 
-    private void OnEnable()
-    {
-        highScore = PlayerPrefs.GetInt("Kills");
-    }
+	private void AddEventListeners()
+	{
+		eventService.OnGameOver.AddListener(UpdateHighScore);
+	}
 
-    public void UpdateScore()
-    {
-        kills++;
-        scoreText.text = "Kills : " + kills;
-    }
+	private void SavePrefs()
+	{
+		PlayerPrefs.Save();
+	}
 
-    public string GetScore() {  return kills.ToString(); }
-    public int GetHighScore() { return PlayerPrefs.GetInt("Kills"); }
-    private void SavePrefs()
-    {
-        PlayerPrefs.Save();
-    }
+	private void UpdateHighScore(int kills)
+	{
+		if (highScore < kills)
+		{
+			highScore = kills;
+			PlayerPrefs.SetInt("Kills",highScore);
+		}
+		SavePrefs();
+	}
 
-    public void UpdateHighScore()
-    {
-        if (highScore < kills)
-        {
-            highScore = kills;
-            PlayerPrefs.SetInt("Kills",highScore);
-        }
-        SavePrefs();
-    }
+	private void OnDestroy()
+	{
+		eventService.OnGameOver.RemoveListener(UpdateHighScore);
+	}
 
 }
 
