@@ -143,24 +143,15 @@ namespace Assets.Scripts.player
 		{
 			mousePosition = playerView.GetCamera().ScreenToWorldPoint(Input.mousePosition);
 
-			Vector3 normalized = (mousePosition - playerView.GetAimObject().position).normalized;
-			Vector3 lookDirection = normalized;
+			Vector3 lookDirection = (mousePosition - playerView.GetAimObject().position).normalized;
 			angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
 			playerView.GetAimObject().eulerAngles = new Vector3(0, 0, angle);
 
-			Vector3 aimScale = Vector3.one;
-			if (angle > 90 || angle < -90)
-			{
-				aimScale.x = -1f;
-				aimScale.y = -1f;
-				playerScale.x = -0.4f;
-			}
-			else
-			{
-				aimScale = Vector3.one;
-				playerScale.x = Mathf.Abs(playerScale.x);
-			}
-			playerView.GetAimObject().localScale = aimScale;
+            bool shouldFlip = angle > 90 || angle < -90;
+            Vector3 aimScale = shouldFlip ? new Vector3(-1f, -1f, 1f) : Vector3.one;
+            playerScale.x = shouldFlip ? -0.4f : Mathf.Abs(playerScale.x);
+
+            playerView.GetAimObject().localScale = aimScale;
 			playerView.GetPlayerTransform().localScale = playerScale;
 		}
 
