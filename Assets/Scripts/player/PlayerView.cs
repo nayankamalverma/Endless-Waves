@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.player
@@ -32,8 +31,6 @@ namespace Assets.Scripts.player
 		private Transform healthBar;
         [SerializeField]
         private Slider healthSlider;
-        [SerializeField]
-		private ParticleSystem bloodParticle;
 
         private PlayerController playerController;
 
@@ -76,7 +73,6 @@ namespace Assets.Scripts.player
 
         public Transform GetHealthBar() => healthBar;
         public Slider GetHealthSlider() => healthSlider;
-        public ParticleSystem GetBloodParticle() => bloodParticle;
 
 
     }

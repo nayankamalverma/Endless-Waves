@@ -1,5 +1,4 @@
 using Assets.Scripts.Utilities.Events;
-using TMPro;
 using UnityEngine;
 
 public class ScoreManager : MonoBehaviour

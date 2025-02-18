@@ -1,98 +1,101 @@
-using Assets.Scripts.Enemy;
 using Assets.Scripts.player;
+using Assets.Scripts.Utilities.VFX;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+namespace Assets.Scripts.Enemy
 {
-    private Transform playerTransform;
-    private EnemyScriptableObjects enemySO;
-    private EnemyService enemyService;
-
-    private Vector3 velocity = Vector3.zero;
-    private float smoothTime = 0.3f;
-    private Vector3 scale;
-    private float lastAttackTime;
-    private int health;
-
-    public void SetReferences(EnemyService enemyService, EnemyScriptableObjects enemySO, PlayerView player)
+    public class EnemyController : MonoBehaviour
     {
-        this.enemyService = enemyService;
-        playerTransform = player.gameObject.transform;
-        this.enemySO =enemySO;
-    }
+        private Transform playerTransform;
+        private EnemyScriptableObjects enemySO;
+        private EnemyService enemyService;
 
-    public void ConfigureEnemy(Vector2 position)
-    {
-        transform.position = position;
-        health = enemySO.enemyHeath;
-    }
+        private Vector3 velocity = Vector3.zero;
+        private float smoothTime = 0.3f;
+        private Vector3 scale;
+        private float lastAttackTime;
+        private int health;
 
-    public EnemyType GetEnemyType() => enemySO.enemyType;
-
-    private void Start()
-    {
-        scale = transform.localScale;
-        lastAttackTime = - enemySO.attackCooldown; // Ensure the enemy can attack immediately
-    }
-
-    private void Update()
-    {
-        if (playerTransform == null)
+        public void SetReferences(EnemyService enemyService, EnemyScriptableObjects enemySO, PlayerView player)
         {
-            Debug.LogError("Player transform not assigned!");
-            return;
+            this.enemyService = enemyService;
+            playerTransform = player.gameObject.transform;
+            this.enemySO = enemySO;
         }
 
-        Vector3 direction = playerTransform.position - transform.position;
-        float distance = direction.magnitude;
-
-        if (distance > enemySO.stoppingDistance)
+        public void ConfigureEnemy(Vector2 position)
         {
-            MoveTowardsPlayer(direction);
-            UpdateFacingDirection();
+            transform.position = position;
+            health = enemySO.enemyHeath;
         }
-    }
 
-    private void MoveTowardsPlayer(Vector3 direction)
-    {
-        Vector3 targetPosition = playerTransform.position - direction.normalized * enemySO.stoppingDistance;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, enemySO.speed);
-    }
+        public EnemyType GetEnemyType() => enemySO.enemyType;
 
-    private void UpdateFacingDirection()
-    {
-        if (velocity.x > 0)
+        private void Start()
         {
-            scale.x = Mathf.Abs(scale.x); // Face right
+            scale = transform.localScale;
+            lastAttackTime = -enemySO.attackCooldown; // Ensure the enemy can attack immediately
         }
-        else if (velocity.x < 0)
-        {
-            scale.x = -Mathf.Abs(scale.x); // Face left
-        }
-        transform.localScale = scale;
-    }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if ( collision.transform.CompareTag("Player") && Time.time >= lastAttackTime + enemySO.attackCooldown)
+        private void Update()
         {
-            Attack();
-        }
-    }
+            if (playerTransform == null)
+            {
+                Debug.LogError("Player transform not assigned!");
+                return;
+            }
 
-    private void Attack()
-    {
+            Vector3 direction = playerTransform.position - transform.position;
+            float distance = direction.magnitude;
+
+            if (distance > enemySO.stoppingDistance)
+            {
+                MoveTowardsPlayer(direction);
+                UpdateFacingDirection();
+            }
+        }
+
+        private void MoveTowardsPlayer(Vector3 direction)
+        {
+            Vector3 targetPosition = playerTransform.position - direction.normalized * enemySO.stoppingDistance;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, enemySO.speed);
+        }
+
+        private void UpdateFacingDirection()
+        {
+            if (velocity.x > 0)
+            {
+                scale.x = Mathf.Abs(scale.x); // Face right
+            }
+            else if (velocity.x < 0)
+            {
+                scale.x = -Mathf.Abs(scale.x); // Face left
+            }
+            transform.localScale = scale;
+        }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.transform.CompareTag("Player") && Time.time >= lastAttackTime + enemySO.attackCooldown)
+            {
+                Attack();
+            }
+        }
+
+        private void Attack()
+        {
             lastAttackTime = Time.time;
             enemyService.eventService.OnPlayerHurt.Invoke(enemySO.damage);
-    }
+        }
 
-    public void TakeDamage()
-    {
-        Instantiate(enemySO.blood, new Vector3(transform.position.x, transform.position.y, -4f), enemySO.blood.transform.rotation);
-        health--;
-        if (health <= 0)
+        public void TakeDamage()
         {
-            enemyService.ReturnEnemy(this);
+            VFXService.Instance.PlayVFX(VFXType.Blood, new Vector3(transform.position.x, transform.position.y, -4f));
+            health--;
+            if (health <= 0)
+            {
+                enemyService.ReturnEnemy(this);
+            }
         }
     }
 }

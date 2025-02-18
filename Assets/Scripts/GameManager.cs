@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.LevelService;
 using Assets.Scripts.player;
+using Assets.Scripts.UI;
 using Assets.Scripts.Utilities.Events;
 using UnityEngine;
 
@@ -46,5 +47,4 @@ public class GameManager : MonoBehaviour
 
         UIService.SetService(EventService);
     }
-
 }

@@ -1,3 +1,4 @@
+using Assets.Scripts.Enemy;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyScriptableObjects", menuName = "Scriptable Objects/EnemyScriptableObjects")]
@@ -10,7 +11,7 @@ public class EnemyScriptableObjects : ScriptableObject
     public int damage = 10;
     public float attackCooldown = 1.0f;
     public GameObject blood;
-    public float stoppingDistance = 1.0f; // Distance to stop from the player
+    public float stoppingDistance = 1.0f;
 }
 
 public enum EnemyType

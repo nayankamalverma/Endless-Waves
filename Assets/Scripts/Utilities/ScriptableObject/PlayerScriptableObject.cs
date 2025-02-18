@@ -1,4 +1,3 @@
-using Assets.Scripts.player;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerScriptableObject", menuName = "Scriptable Objects/PlayerSO")]
