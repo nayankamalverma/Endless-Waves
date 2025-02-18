@@ -24,6 +24,7 @@ namespace Assets.Scripts.Enemy
 				{
 					item.isUsed = true;
 					item.enemy.gameObject.SetActive(true);
+					item.enemy.enabled = true;
 					return item.enemy;
 				}
 			}

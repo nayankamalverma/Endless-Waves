@@ -92,7 +92,7 @@ namespace Assets.Scripts.Enemy
             }
             if(enemySpawned == enemyCnt)
             {
-                yield return new WaitForSeconds(15f);
+                yield return new WaitForSeconds(10f);
                 eventService.StartNextWave.Invoke();
             }
         }
