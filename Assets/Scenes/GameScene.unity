@@ -914,7 +914,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95219724a4dd1ae4d806343c6e6bfd59, type: 2}
   - {fileID: 11400000, guid: a97b52c81ad8046468c65f29640eee7c, type: 2}
   enemyParent: {fileID: 1003696235}
-  baseEnemyCount: 5
+  baseEnemyCount: 8
   baseSpawnInterval: 3
   UIService: {fileID: 404940819}
 --- !u!1 &308877094
@@ -2007,6 +2007,55 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6919a22c941a3824d844b4bc3ce2046e, type: 3}
+--- !u!1 &1166799528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166799530}
+  - component: {fileID: 1166799529}
+  m_Layer: 0
+  m_Name: VFXService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1166799529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166799528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2caba3ea4bfca8541a488594339fc4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VFXList:
+  - item: {fileID: 6683385348526474697, guid: 6363b800eb26c134782a98c7957fdba2, type: 3}
+    parentTransform: {fileID: 1860692014}
+    type: 0
+--- !u!4 &1166799530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166799528}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 671.18054, y: 505.8362, z: -4.973467}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1860692014}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1274196983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,6 +3818,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852638308}
   m_CullTransparentMesh: 1
+--- !u!1 &1860692013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1860692014}
+  m_Layer: 0
+  m_Name: Blood
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1860692014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860692013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1166799530}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1901339370
 GameObject:
   m_ObjectHideFlags: 0
@@ -4493,3 +4573,4 @@ SceneRoots:
   - {fileID: 295776286}
   - {fileID: 721209002}
   - {fileID: 1126398339}
+  - {fileID: 1166799530}

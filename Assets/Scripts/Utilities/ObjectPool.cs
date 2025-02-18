@@ -8,7 +8,7 @@ namespace Assets.Scripts.Utilities
     {
         public List<PooledItem> pooledItems = new List<PooledItem>();
 
-        public virtual GameObject GetItem()
+        protected virtual GameObject GetItem()
         {
             if (pooledItems.Count > 0)
             {
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Utilities
             throw new NotImplementedException("CreateItem() method not implemented in derived class");
         }
 
-        public virtual void ReturnItem(PooledItem item)
+        protected virtual void ReturnItem(PooledItem item)
         {
             item.item.SetActive(false);
             item.isUsed = false;

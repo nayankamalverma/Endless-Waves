@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Utilities.Events
+﻿using Assets.Scripts.Enemy;
+
+namespace Assets.Scripts.Utilities.Events
 {
 	public class EventService
 	{

@@ -1,7 +1,9 @@
 using Assets.Scripts.Utilities;
 using Assets.Scripts.Utilities.Events;
 using System.Collections;
+using Assets.Scripts.Enemy;
 using UnityEngine;
+using Assets.Scripts.Utilities.VFX;
 
 namespace Assets.Scripts.player
 {
@@ -102,7 +104,7 @@ namespace Assets.Scripts.player
 			{
 			   GameOver();
 			}
-			GameObject.Instantiate(playerView.GetBloodParticle(), new Vector3(playerView.GetPlayerTransform().position.x, playerView.GetPlayerTransform().position.y, -4f), playerView.GetBloodParticle().transform.rotation);
+			VFXService.Instance.PlayVFX(VFXType.Blood, playerView.GetAimObject().transform.position);
 		}
 
 
@@ -196,6 +198,5 @@ namespace Assets.Scripts.player
 		{
 			eventService.OnPlayerHurt.RemoveListener(TakeDamage);
 		}
-
 	}
 }

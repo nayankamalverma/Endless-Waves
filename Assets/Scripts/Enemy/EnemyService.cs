@@ -85,7 +85,6 @@ namespace Assets.Scripts.Enemy
             while (enemySpawned < enemyCnt)
             {
                 if(IsGamePaused) yield return new WaitUntil( () => {  return !IsGamePaused;});
-                Debug.Log("Spawning Enemy");
                 SpawnEnemy();
                 enemySpawned++;
 
@@ -93,7 +92,7 @@ namespace Assets.Scripts.Enemy
             }
             if(enemySpawned == enemyCnt)
             {
-                yield return new WaitForSeconds(enemyCnt);
+                yield return new WaitForSeconds(15f);
                 eventService.StartNextWave.Invoke();
             }
         }

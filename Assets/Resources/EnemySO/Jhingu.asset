@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 576866513195923109, guid: 4868d18db68535647a88b5169d3b328f, type: 3}
   enemyType: 1
-  speed: 2
+  speed: 3
   enemyHeath: 2
   damage: 10
-  attackCooldown: 1
+  attackCooldown: 2
   blood: {fileID: 6683385348526474697, guid: 6363b800eb26c134782a98c7957fdba2, type: 3}
   stoppingDistance: 1

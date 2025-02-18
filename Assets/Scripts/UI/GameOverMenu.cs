@@ -3,47 +3,50 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverMenu : MonoBehaviour
+namespace Assets.Scripts.UI
 {
-    [SerializeField]
-    private Button restart;
-    [SerializeField]
-    private Button mainMenu;
-
-    [SerializeField]
-    private TextMeshProUGUI highScore;
-    [SerializeField]
-    private TextMeshProUGUI killsText;
-
-    EventService eventService;
-
-    public void SetServices(EventService eventService)
+    public class GameOverMenu : MonoBehaviour
     {
-        this.eventService = eventService;
-    }
+        [SerializeField]
+        private Button restart;
+        [SerializeField]
+        private Button mainMenu;
 
-    private void Awake()
-    {
-        restart.onClick.AddListener(Restart);
-        mainMenu.onClick.AddListener(LoadMainMenu);
-    }
+        [SerializeField]
+        private TextMeshProUGUI highScore;
+        [SerializeField]
+        private TextMeshProUGUI killsText;
 
-    private void OnEnable()
-    {
-        highScore.text = "Highest Kills : "+ PlayerPrefs.GetInt("Kills");
-    }
+        EventService eventService;
 
-    public void UpdateKills(int kills){
-        killsText.text = "Kills : " + kills;
-    }
-    private void Restart()
-    {
-       eventService.OnGameStart.Invoke();
-    }
+        public void SetServices(EventService eventService)
+        {
+            this.eventService = eventService;
+        }
 
-    private void LoadMainMenu()
-    {
-       eventService.OnMainMenuButtonClicked.Invoke();
-    }
+        private void Awake()
+        {
+            restart.onClick.AddListener(Restart);
+            mainMenu.onClick.AddListener(LoadMainMenu);
+        }
 
+        private void OnEnable()
+        {
+            highScore.text = "Highest Kills : " + PlayerPrefs.GetInt("Kills");
+        }
+
+        public void UpdateKills(int kills)
+        {
+            killsText.text = "Kills : " + kills;
+        }
+        private void Restart()
+        {
+            eventService.OnGameStart.Invoke();
+        }
+
+        private void LoadMainMenu()
+        {
+            eventService.OnMainMenuButtonClicked.Invoke();
+        }
+    }
 }
