@@ -37,11 +37,5 @@ namespace Assets.Scripts.LevelService
 			spawnInterval = Mathf.Max(1f,baseSpawnInterval -( currentWave - 0.1f));
 			eventService.StartEnemySpawn.Invoke(enemiesCount, spawnInterval);
 		}
-
-		~LevelService()
-		{
-			eventService.OnGameStart.RemoveListener(StartWave);
-			eventService.StartNextWave.RemoveListener(StartWave);
-		}
 	}
 }

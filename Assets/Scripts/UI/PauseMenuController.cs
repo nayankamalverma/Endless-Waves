@@ -9,10 +9,9 @@ namespace Assets.Scripts.UI
     {
         [SerializeField] private Button resume;
         [SerializeField] private Button endGame;
-
         [SerializeField] private TextMeshProUGUI highScore;
 
-        EventService eventService;
+        private EventService eventService;
 
         public void SetServices(EventService eventService)
         {

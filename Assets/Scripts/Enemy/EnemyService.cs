@@ -130,14 +130,5 @@ namespace Assets.Scripts.Enemy
             return spawnPosition;
         }
 
-        ~EnemyService()
-        {
-            eventService.StartEnemySpawn.RemoveListener(SpawnEnemyWave);
-            eventService.OnEnemyHurt.RemoveListener(OnEnemyHurt);
-            eventService.OnGamePause.RemoveListener(OnGamePause);
-            eventService.OnGameResume.RemoveListener(OnGameResume);
-            eventService.OnGameOver.RemoveListener(OnGameOver);
-        }
-
     }
 }
