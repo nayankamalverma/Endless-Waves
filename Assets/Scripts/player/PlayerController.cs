@@ -1,7 +1,8 @@
-using Assets.Scripts.Utilities;
 using Assets.Scripts.Utilities.Events;
 using System.Collections;
 using Assets.Scripts.Enemy;
+using Assets.Scripts.UI.ScriptableObjects;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 using Assets.Scripts.Utilities.VFX;
 
@@ -10,8 +11,8 @@ namespace Assets.Scripts.player
 	public class PlayerController
 	{
 		private Vector3 mousePosition;
-		float angle;
-		Vector3 playerScale;
+		private float angle;
+		private Vector3 playerScale;
 		private Vector2 movement;
 		private int kills;
 		private bool IsActive;
@@ -19,7 +20,6 @@ namespace Assets.Scripts.player
 		private PlayerView playerView;
 		private PlayerModel playerModel;
 		private EventService eventService;
-		private CoroutineRunner coroutineRunner;
 
 		public PlayerController(EventService eventService, PlayerScriptableObject playerSO, PlayerView playerView)
 		{
@@ -28,7 +28,6 @@ namespace Assets.Scripts.player
 
 			playerView.SetPlayerController(this);
 			playerModel = new PlayerModel(playerSO);
-			coroutineRunner = CoroutineRunner.Instance;
 			AddEventListeners();
 		}
 
@@ -44,7 +43,7 @@ namespace Assets.Scripts.player
 		public void Start()
 		{
 			playerScale = playerView.GetPlayerTransform().localScale;
-		}
+        }
 
 		public void OnGameStart()
 		{
@@ -70,16 +69,17 @@ namespace Assets.Scripts.player
 			if (!IsActive) return;
 			if (Input.GetKeyDown(KeyCode.Escape)) GamePause();
 
+			//movement
+
 			movement.x = Input.GetAxisRaw("Horizontal");
 			movement.y = Input.GetAxisRaw("Vertical");
 			movement = movement.normalized;
 			float speed = movement.magnitude;
-
 			playerView.GetAnimator().SetFloat("speed", speed);
+
 			//shooting
 			HandleAim();
 			HandelShooting();
-
 		}
 
 		public void FixedUpdate()
@@ -115,6 +115,7 @@ namespace Assets.Scripts.player
 			UpdateHealthSlider();
 		}
 
+		//feature to be added in future
 		private void Heal(int hp)
 		{
 			playerModel.Heal(hp);
@@ -132,7 +133,7 @@ namespace Assets.Scripts.player
 
 		private void GameOver()
 		{
-			SoundManger.Instance.Play(Sounds.GameOver);
+			SoundService.Instance.Play(Sounds.GameOver);
 			playerView.GetAnimator().SetTrigger("death");
 			eventService.OnGameOver.Invoke(kills);
 			IsActive = false;
@@ -151,7 +152,8 @@ namespace Assets.Scripts.player
 
 			bool shouldFlip = angle > 90 || angle < -90;
 			Vector3 aimScale = shouldFlip ? new Vector3(-1f, -1f, 1f) : Vector3.one;
-			playerScale.x = shouldFlip ? -0.4f : Mathf.Abs(playerScale.x);
+			float x = Mathf.Abs(playerScale.x);
+            playerScale.x = shouldFlip ? -x : x;
 
 			playerView.GetAimObject().localScale = aimScale;
 			playerView.GetPlayerTransform().localScale = playerScale;
@@ -159,7 +161,7 @@ namespace Assets.Scripts.player
 
 		private void HandelShooting()
 		{
-			if (Input.GetMouseButtonDown(0)) coroutineRunner.StartCoroutine(HandleShooting());
+			if (Input.GetMouseButtonDown(0)) CoroutineRunner.Instance.RunCoroutine(HandleShooting());
 		}
 
 		private IEnumerator HandleShooting()
@@ -169,7 +171,7 @@ namespace Assets.Scripts.player
 			var fireDirection = firePoint.right;
 
 			playerView.GetGunAnimator().SetTrigger("shoot");
-			SoundManger.Instance.Play(Sounds.Shoot);
+			SoundService.Instance.Play(Sounds.Shoot);
 			playerView.GetLineRenderer().enabled = true;
 			playerView.GetLine().SetActive(true);
 
@@ -194,5 +196,19 @@ namespace Assets.Scripts.player
 			kills++;
 		}
 		#endregion
-	}
+
+        public void OnDestroy()
+        {
+            RemoveEventListeners();
+        }
+
+        private void RemoveEventListeners()
+        {
+            eventService.OnGameStart.RemoveListener(OnGameStart);
+            eventService.OnGameResume.RemoveListener(OnGameResume);
+            eventService.OnPlayerHurt.RemoveListener(TakeDamage);
+            eventService.OnEnemyKilled.RemoveListener(UpdateKills);
+            eventService.OnGameOverPauseMenu.RemoveListener(GameOver);
+        }
+    }
 }

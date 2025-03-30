@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utilities.Events;
+﻿using Assets.Scripts.UI.ScriptableObjects;
+using Assets.Scripts.Utilities.Events;
 
 namespace Assets.Scripts.player
 {

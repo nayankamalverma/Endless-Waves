@@ -1,22 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 
 namespace Assets.Scripts.Utilities
 {
-    public class CoroutineRunner : MonoBehaviour
+    public class CoroutineRunner : GenericMonoSingleton<CoroutineRunner>
     {
-        private static CoroutineRunner _instance;
-
-        public static CoroutineRunner Instance
+        public void RunCoroutine(IEnumerator coroutine)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
-                    DontDestroyOnLoad(_instance.gameObject);
-                }
-                return _instance;
-            }
+            StartCoroutine(coroutine);
         }
     }
 }

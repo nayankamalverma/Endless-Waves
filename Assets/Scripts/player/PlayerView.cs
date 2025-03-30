@@ -6,9 +6,11 @@ namespace Assets.Scripts.player
 	public class PlayerView : MonoBehaviour
 	{
 		[SerializeField]
-		private Rigidbody2D rigidbody;
-		[SerializeField] private Animator animator;
-		[SerializeField] private Animator gunAnimator;
+        private Rigidbody2D rigidbody;
+		[SerializeField] 
+        private Animator animator;
+		[SerializeField]
+        private Animator gunAnimator;
 
 		//shooting
 		[Header("Movement and shooting")]
@@ -59,6 +61,11 @@ namespace Assets.Scripts.player
             playerController.LateUpdate();
         }
 
+        private void OnDestroy()
+        {
+			playerController.OnDestroy();
+        }
+
         public Transform GetPlayerTransform()=> transform;
 		public Rigidbody2D GetRigidBody() => rigidbody;
         public Animator GetAnimator() => animator;
@@ -73,8 +80,5 @@ namespace Assets.Scripts.player
 
         public Transform GetHealthBar() => healthBar;
         public Slider GetHealthSlider() => healthSlider;
-
-
     }
-
 }

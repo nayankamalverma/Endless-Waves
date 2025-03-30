@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Utilities.VFX
 {
-	public class BloodVFXPool : ObjectPool
+	public class BloodVFXPool : BaseObjectPool
 	{
 		private VFXItem blood;
-		private CoroutineRunner coroutineRunner;    
 	
 		public BloodVFXPool(VFXItem item) { 
 			blood = item;
-			coroutineRunner = CoroutineRunner.Instance;
 		}
 		
 		public void GetBloodVFX(Vector3 pos)
@@ -18,7 +16,7 @@ namespace Assets.Scripts.Utilities.VFX
 			GameObject bloodVFX = GetItem();
 			bloodVFX.GetComponent<ParticleSystem>().Play();
 			bloodVFX.transform.position = pos;
-			coroutineRunner.StartCoroutine(ReturnBloodVFX(bloodVFX));
+            CoroutineRunner.Instance.RunCoroutine(ReturnBloodVFX(bloodVFX));
 			//remove coroutine and make it return to pool when vfx is done playing
 		}
 

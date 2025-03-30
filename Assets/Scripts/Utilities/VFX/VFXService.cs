@@ -4,32 +4,22 @@ using UnityEngine;
 
 namespace Assets.Scripts.Utilities.VFX
 {
-	public class VFXService : MonoBehaviour
+	public class VFXService : GenericMonoSingleton<VFXService>
 	{
 		[SerializeField]
-		private List<VFXItem> VFXList;
-
-		private static VFXService instance;
-		public static VFXService Instance { get { return instance; } }
+		private List<VFXItem> vfxList;
 
 		private BloodVFXPool bloodVFXPool;
 
-		private void Awake()
+		protected override void Awake()
 		{
-			if (instance == null)
-			{
-				instance = this;
-			}
-			else
-			{
-				Destroy(gameObject);
-			}
-			CreateVFXPool();
+			base.Awake();
+            CreateVFXPool();
 		}
 
 		private void CreateVFXPool()
 		{
-			bloodVFXPool = new BloodVFXPool(VFXList[(int)VFXType.Blood]);
+			bloodVFXPool = new BloodVFXPool(vfxList[(int)VFXType.Blood]);
 		}
 
 		public void PlayVFX(VFXType vfxType, Vector3 position)

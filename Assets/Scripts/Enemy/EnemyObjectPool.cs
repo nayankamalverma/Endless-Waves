@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.UI.ScriptableObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy
@@ -7,15 +8,15 @@ namespace Assets.Scripts.Enemy
 	{
 		private Transform enemyParent;
 		private EnemyService enemyService;
+        public List<PooledItem> pooledItems = new List<PooledItem>();
 
         public EnemyObjectPool(EnemyService enemyService, Transform enemyParent)
 		{
             this.enemyService = enemyService;
 			this.enemyParent = enemyParent;
         }
-		public List<PooledItem> pooledItems = new List<PooledItem>();
 
-		public virtual EnemyController GetEnemy(EnemyType enemyType)
+		public EnemyController GetEnemy(EnemyType enemyType)
 		{
 			if (pooledItems.Count > 0)
 			{
@@ -44,7 +45,7 @@ namespace Assets.Scripts.Enemy
 		{
 			EnemyScriptableObjects enemySO= enemyService.enemyList.Find(i => i.enemyType == enemyType);
             EnemyController enemy = Object.Instantiate<EnemyController>(enemySO.enemy, enemyParent);
-			enemy.SetReferences(enemyService, enemySO, enemyService.player);
+			enemy.SetReferences(enemyService, enemySO, enemyService.playerTransform);
 			return enemy;
         }
 
@@ -64,11 +65,11 @@ namespace Assets.Scripts.Enemy
 				item.isUsed = false;
 			}
 		}
+
 		public class PooledItem
 		{
 			public EnemyController enemy;
 			public bool isUsed;
 		}
 	}
-	
 }

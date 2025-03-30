@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 6747616204429857333, guid: 70fcaa2445f12da4b867642cc2b6edb3, type: 3}
   enemyType: 0
-  speed: 3
+  speed: 5
   enemyHeath: 2
   damage: 10
   attackCooldown: 1.5

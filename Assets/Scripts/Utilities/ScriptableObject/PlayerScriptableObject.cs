@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerScriptableObject", menuName = "Scriptable Objects/PlayerSO")]
-public class PlayerScriptableObject : ScriptableObject
+namespace Assets.Scripts.UI.ScriptableObjects
 {
-    public float moveSpeed = 10f;
-    public int maxHealth = 100;
+    [CreateAssetMenu(fileName = "PlayerScriptableObject", menuName = "Scriptable Objects/PlayerSO")]
+    public class PlayerScriptableObject : ScriptableObject
+    {
+        public float moveSpeed = 10f;
+        public int maxHealth = 100;
+    }
 }

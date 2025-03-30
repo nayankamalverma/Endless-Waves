@@ -2,7 +2,6 @@
 
 namespace Assets.Scripts.Utilities.Events
 {
-	
 	public class EventController
 	{
 		private event Action baseEvent;

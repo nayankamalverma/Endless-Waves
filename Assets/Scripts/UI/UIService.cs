@@ -1,5 +1,4 @@
 using System.Collections;
-using Assets.Scripts.UI;
 using Assets.Scripts.Utilities.Events;
 using UnityEngine;
 
@@ -103,6 +102,7 @@ namespace Assets.Scripts.UI
 			eventService.OnGamePause.RemoveListener(GamePause);
 			eventService.OnGameResume.RemoveListener(GameResume);
 			eventService.OnGameOver.RemoveListener(GameOver);
+			eventService.OnMainMenuButtonClicked.RemoveListener(OnMainMenuButtonClicked);
 		}
 	}
 }

@@ -44,25 +44,25 @@ namespace Assets.Scripts.UI
 
         private void PlayGame()
         {
-            SoundManger.Instance.Play(Sounds.ButtonClick);
+            SoundService.Instance.Play(Sounds.ButtonClick);
             eventService.OnGameStart.Invoke();
             gameObject.SetActive(false);
         }
 
         private void ActivateHelpMenu()
         {
-            SoundManger.Instance.Play(Sounds.ButtonClick);
+            SoundService.Instance.Play(Sounds.ButtonClick);
             helpMenu.SetActive(true);
         }
         private void DeactivateHelpMenu()
         {
-            SoundManger.Instance.Play(Sounds.ButtonClick);
+            SoundService.Instance.Play(Sounds.ButtonClick);
             helpMenu.SetActive(false);
         }
 
         private void ExitGame()
         {
-            SoundManger.Instance.Play(Sounds.ButtonClick);
+            SoundService.Instance.Play(Sounds.ButtonClick);
             Application.Quit();
         }
     }

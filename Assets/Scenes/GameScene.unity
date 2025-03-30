@@ -2050,9 +2050,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2caba3ea4bfca8541a488594339fc4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VFXList:
+  vfxList:
   - item: {fileID: 6683385348526474697, guid: 6363b800eb26c134782a98c7957fdba2, type: 3}
     parentTransform: {fileID: 1860692014}
+    type: 0
+  - item: {fileID: 0}
+    parentTransform: {fileID: 0}
     type: 0
 --- !u!4 &1166799530
 Transform:
@@ -2728,9 +2731,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a35717fbdac2641a2189dc0dcd1f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: {fileID: 507079410}
+  music: {fileID: 507079410}
   soundEffect: {fileID: 348814784}
-  Sounds:
+  sounds:
   - soundType: 0
     soundClip: {fileID: 8300000, guid: 65c86708160f5f54ea9b2fd9752b01db, type: 3}
   - soundType: 1

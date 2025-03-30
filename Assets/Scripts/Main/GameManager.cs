@@ -3,6 +3,7 @@ using Assets.Scripts.Enemy;
 using Assets.Scripts.LevelService;
 using Assets.Scripts.player;
 using Assets.Scripts.UI;
+using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities.Events;
 using UnityEngine;
 
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
     private PlayerService PlayerService;
     private EnemyService EnemyService;
     private LevelService LevelService;
-    [SerializeField]private UIService UIService;
+    [SerializeField] private UIService UIService;
     #endregion
 
 
@@ -42,9 +43,15 @@ public class GameManager : MonoBehaviour
     {
         EventService = new EventService();
         PlayerService = new PlayerService(EventService, playerSO, player);
-        EnemyService = new EnemyService( EventService, enemyList,enemyParent, player);
+        EnemyService = new EnemyService( EventService, enemyList,enemyParent, player.gameObject.transform);
         LevelService = new LevelService(EventService, baseEnemyCount,baseSpawnInterval);
 
         UIService.SetService(EventService);
+    }
+
+    private void OnDestroy()
+    {
+        EnemyService.OnDestroy();
+        LevelService.OnDestroy();
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace Assets.Scripts.player
+﻿using Assets.Scripts.UI.ScriptableObjects;
+
+namespace Assets.Scripts.player
 {
     public class PlayerModel
     {
-        PlayerScriptableObject playerSO;
+        private PlayerScriptableObject playerSO;
         private int currentHealth;
 
         public PlayerModel(PlayerScriptableObject playerSO)

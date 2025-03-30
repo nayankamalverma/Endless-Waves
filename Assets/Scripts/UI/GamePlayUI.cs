@@ -53,7 +53,6 @@ namespace Assets.Scripts.UI
             UpdateTexts();
         }
 
-
         private void OnDestroy()
 		{
             eventService.OnGameStart.RemoveListener(OnGameStart);

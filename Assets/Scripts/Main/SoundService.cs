@@ -1,30 +1,15 @@
 using System;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 
-public class SoundManger : MonoBehaviour
+public class SoundService : GenericMonoSingleton<SoundService>
 {
-    private static SoundManger instance;
-    public static SoundManger Instance { get { return instance; } }
-
     [SerializeField]
-    private AudioSource Music;
+    private AudioSource music;
     [SerializeField]
     private AudioSource soundEffect;
     [SerializeField]
-    private SoundType[] Sounds;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    private SoundType[] sounds;
 
     private void Start()
     {
@@ -32,17 +17,17 @@ public class SoundManger : MonoBehaviour
     }
     public void PlayMusic(Sounds sound)
     {
-        AudioClip clip = getSoundClip(sound);
+        AudioClip clip = GetSoundClip(sound);
         if (clip != null)
         {
-            Music.clip = clip;
-            Music.Play();
+            music.clip = clip;
+            music.Play();
         }
     }
 
     public void Play(Sounds sound)
     {
-        AudioClip clip = getSoundClip(sound);
+        AudioClip clip = GetSoundClip(sound);
         if (clip != null)
         {
             soundEffect.PlayOneShot(clip);
@@ -54,9 +39,9 @@ public class SoundManger : MonoBehaviour
 
     }
 
-    private AudioClip getSoundClip(Sounds sound)
+    private AudioClip GetSoundClip(Sounds sound)
     {
-        SoundType soundType = Array.Find(Sounds, audio => audio.soundType == sound);
+        SoundType soundType = Array.Find(sounds, audio => audio.soundType == sound);
         if (soundType != null)
         {
             return soundType.soundClip;

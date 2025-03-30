@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Utilities
 {
-    public class ObjectPool
+    public class BaseObjectPool
     {
         public List<PooledItem> pooledItems = new List<PooledItem>();
 
@@ -53,6 +53,7 @@ namespace Assets.Scripts.Utilities
         }
 
     }
+
     public class PooledItem
     {
         public GameObject item;

@@ -1,10 +1,10 @@
 ﻿using System;
-using Assets.Scripts.player;
 using Assets.Scripts.Utilities.Events;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Collections;
+using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities;
 
 namespace Assets.Scripts.Enemy
@@ -13,24 +13,22 @@ namespace Assets.Scripts.Enemy
     {
         public EventService eventService { get; private set; }
         public List<EnemyScriptableObjects> enemyList {  get; private set; }
-        public PlayerView player { get; private set; }
+        public Transform playerTransform { get; private set; }
         public Transform enemyParent { get; private set; }
 
         private float spawnRadius = 50;
         private int enemyTypeCount;
         private EnemyObjectPool enemyObjectPool;
-        private CoroutineRunner coroutineRunner;
         private bool IsGamePaused;
 
-        public EnemyService(EventService eventService, List<EnemyScriptableObjects> enemyList,Transform enemyParent, PlayerView player)
+        public EnemyService(EventService eventService, List<EnemyScriptableObjects> enemyList,Transform enemyParent, Transform playerTransform)
         {
             this.eventService = eventService;
             this.enemyList = enemyList;
             this.enemyParent = enemyParent;
-            this.player = player;
+            this.playerTransform = playerTransform;
             enemyObjectPool = new EnemyObjectPool(this, enemyParent);
             enemyTypeCount = Enum.GetValues(typeof(EnemyType)).Length;
-            coroutineRunner = CoroutineRunner.Instance;
             AddEventListeners();
         }
 
@@ -69,14 +67,14 @@ namespace Assets.Scripts.Enemy
 
         private void OnGameOver(int kills)
         {
-            coroutineRunner.StopAllCoroutines();
+            CoroutineRunner.Instance.StopAllCoroutines();
             enemyObjectPool.ReturnAllItem();
         }
 
 
         private void SpawnEnemyWave(int enemyCnt, float spawnInterval)
         {
-            coroutineRunner.StartCoroutine(Spawn(enemyCnt, spawnInterval));
+            CoroutineRunner.Instance.RunCoroutine(Spawn(enemyCnt, spawnInterval));
         }
         private IEnumerator Spawn(int enemyCnt, float spawnInterval)
         {
@@ -130,5 +128,14 @@ namespace Assets.Scripts.Enemy
             return spawnPosition;
         }
 
+        public void OnDestroy()
+        {
+            eventService.StartEnemySpawn.RemoveListener(SpawnEnemyWave);
+            eventService.OnEnemyHurt.RemoveListener(OnEnemyHurt);
+            eventService.OnGameStart.RemoveListener(OnGameStart);
+            eventService.OnGamePause.RemoveListener(OnGamePause);
+            eventService.OnGameResume.RemoveListener(OnGameResume);
+            eventService.OnGameOver.RemoveListener(OnGameOver);
+        }
     }
 }

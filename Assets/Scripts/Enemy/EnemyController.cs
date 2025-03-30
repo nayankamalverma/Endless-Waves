@@ -1,4 +1,5 @@
 using Assets.Scripts.player;
+using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities.VFX;
 using UnityEngine;
 
@@ -16,11 +17,11 @@ namespace Assets.Scripts.Enemy
         private float lastAttackTime;
         private int health;
 
-        public void SetReferences(EnemyService enemyService, EnemyScriptableObjects enemySO, PlayerView player)
+        public void SetReferences(EnemyService enemyService, EnemyScriptableObjects enemySO, Transform playerTransform)
         {
             this.enemyService = enemyService;
-            playerTransform = player.gameObject.transform;
             this.enemySO = enemySO;
+            this.playerTransform = playerTransform;
         }
 
         public void ConfigureEnemy(Vector2 position)
@@ -39,12 +40,6 @@ namespace Assets.Scripts.Enemy
 
         private void Update()
         {
-            if (playerTransform == null)
-            {
-                Debug.LogError("Player transform not assigned!");
-                return;
-            }
-
             Vector3 direction = playerTransform.position - transform.position;
             float distance = direction.magnitude;
 
