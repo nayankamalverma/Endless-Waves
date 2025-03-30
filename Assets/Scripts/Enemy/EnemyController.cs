@@ -53,7 +53,8 @@ namespace Assets.Scripts.Enemy
         private void MoveTowardsPlayer(Vector3 direction)
         {
             Vector3 targetPosition = playerTransform.position - direction.normalized * enemySO.stoppingDistance;
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime, enemySO.speed);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime,
+                enemySO.speed);
         }
 
         private void UpdateFacingDirection()
@@ -66,6 +67,7 @@ namespace Assets.Scripts.Enemy
             {
                 scale.x = -Mathf.Abs(scale.x); // Face left
             }
+
             transform.localScale = scale;
         }
 

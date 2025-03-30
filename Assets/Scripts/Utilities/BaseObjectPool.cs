@@ -20,6 +20,7 @@ namespace Assets.Scripts.Utilities
                     return item.item;
                 }
             }
+
             return CreateNewPooledItem();
         }
 

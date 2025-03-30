@@ -7,15 +7,11 @@ namespace Assets.Scripts.UI
 {
     public class GameOverMenu : MonoBehaviour
     {
-        [SerializeField]
-        private Button restart;
-        [SerializeField]
-        private Button mainMenu;
+        [SerializeField] private Button restart;
+        [SerializeField] private Button mainMenu;
 
-        [SerializeField]
-        private TextMeshProUGUI highScore;
-        [SerializeField]
-        private TextMeshProUGUI killsText;
+        [SerializeField] private TextMeshProUGUI highScore;
+        [SerializeField] private TextMeshProUGUI killsText;
 
         EventService eventService;
 
@@ -39,6 +35,7 @@ namespace Assets.Scripts.UI
         {
             killsText.text = "Kills : " + kills;
         }
+
         private void Restart()
         {
             eventService.OnGameStart.Invoke();

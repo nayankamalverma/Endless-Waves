@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class SoundService : GenericMonoSingleton<SoundService>
 {
-    [SerializeField]
-    private AudioSource music;
-    [SerializeField]
-    private AudioSource soundEffect;
-    [SerializeField]
-    private SoundType[] sounds;
+    [SerializeField] private AudioSource music;
+    [SerializeField] private AudioSource soundEffect;
+    [SerializeField] private SoundType[] sounds;
 
     private void Start()
     {
         PlayMusic(global::Sounds.Music);
     }
+
     public void PlayMusic(Sounds sound)
     {
         AudioClip clip = GetSoundClip(sound);
@@ -46,6 +44,7 @@ public class SoundService : GenericMonoSingleton<SoundService>
         {
             return soundType.soundClip;
         }
+
         return null;
     }
 }
@@ -62,5 +61,5 @@ public enum Sounds
     Music,
     ButtonClick,
     Shoot,
-    GameOver    
+    GameOver
 }

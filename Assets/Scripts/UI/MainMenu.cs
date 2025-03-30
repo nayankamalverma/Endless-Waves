@@ -54,6 +54,7 @@ namespace Assets.Scripts.UI
             SoundService.Instance.Play(Sounds.ButtonClick);
             helpMenu.SetActive(true);
         }
+
         private void DeactivateHelpMenu()
         {
             SoundService.Instance.Play(Sounds.ButtonClick);

@@ -12,7 +12,7 @@ namespace Assets.Scripts.Enemy
     public class EnemyService
     {
         public EventService eventService { get; private set; }
-        public List<EnemyScriptableObjects> enemyList {  get; private set; }
+        public List<EnemyScriptableObjects> enemyList { get; private set; }
         public Transform playerTransform { get; private set; }
         public Transform enemyParent { get; private set; }
 
@@ -21,7 +21,8 @@ namespace Assets.Scripts.Enemy
         private EnemyObjectPool enemyObjectPool;
         private bool IsGamePaused;
 
-        public EnemyService(EventService eventService, List<EnemyScriptableObjects> enemyList,Transform enemyParent, Transform playerTransform)
+        public EnemyService(EventService eventService, List<EnemyScriptableObjects> enemyList, Transform enemyParent,
+            Transform playerTransform)
         {
             this.eventService = eventService;
             this.enemyList = enemyList;
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Enemy
             eventService.OnGameResume.AddListener(OnGameResume);
             eventService.OnGameOver.AddListener(OnGameOver);
         }
-        
+
         private void OnGameStart()
         {
             IsGamePaused = false;
@@ -61,7 +62,7 @@ namespace Assets.Scripts.Enemy
             IsGamePaused = false;
             foreach (var enemy in enemyObjectPool.pooledItems)
             {
-                if (enemy.isUsed) enemy.enemy.enabled = true ;
+                if (enemy.isUsed) enemy.enemy.enabled = true;
             }
         }
 
@@ -76,19 +77,21 @@ namespace Assets.Scripts.Enemy
         {
             CoroutineRunner.Instance.RunCoroutine(Spawn(enemyCnt, spawnInterval));
         }
+
         private IEnumerator Spawn(int enemyCnt, float spawnInterval)
         {
-            int enemySpawned =0;
+            int enemySpawned = 0;
 
             while (enemySpawned < enemyCnt)
             {
-                if(IsGamePaused) yield return new WaitUntil( () => {  return !IsGamePaused;});
+                if (IsGamePaused) yield return new WaitUntil(() => { return !IsGamePaused; });
                 SpawnEnemy();
                 enemySpawned++;
 
                 yield return new WaitForSeconds(spawnInterval);
             }
-            if(enemySpawned == enemyCnt)
+
+            if (enemySpawned == enemyCnt)
             {
                 yield return new WaitForSeconds(10f);
                 eventService.StartNextWave.Invoke();
@@ -98,7 +101,7 @@ namespace Assets.Scripts.Enemy
         private void SpawnEnemy()
         {
             EnemyController enemy = enemyObjectPool.GetEnemy(GetRandomEnemy());
-            enemy.ConfigureEnemy( RandomSpawnPosition());
+            enemy.ConfigureEnemy(RandomSpawnPosition());
         }
 
         public void ReturnEnemy(EnemyController enemyController)
@@ -106,12 +109,14 @@ namespace Assets.Scripts.Enemy
             enemyObjectPool.ReturnItem(enemyController);
             eventService.OnEnemyKilled.Invoke();
         }
-        
-        private void OnEnemyHurt(EnemyController enemyController ){
+
+        private void OnEnemyHurt(EnemyController enemyController)
+        {
             enemyObjectPool.pooledItems.Find(i => i.enemy == enemyController).enemy.TakeDamage();
         }
 
-        private EnemyType GetRandomEnemy() { 
+        private EnemyType GetRandomEnemy()
+        {
             return (EnemyType)Random.Range(0, enemyTypeCount);
         }
 

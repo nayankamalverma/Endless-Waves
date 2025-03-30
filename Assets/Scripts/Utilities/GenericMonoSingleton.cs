@@ -5,7 +5,6 @@ namespace Assets.Scripts.Utilities
     public class GenericMonoSingleton<T> : MonoBehaviour where T : GenericMonoSingleton<T>
     {
         private static T instance;
-
         public static T Instance { get { return instance; } }
 
         protected virtual void Awake()
@@ -13,8 +12,7 @@ namespace Assets.Scripts.Utilities
             if (instance == null)
             {
                 instance = (T)this;
-            }
-            else
+            }else
             {
                 Destroy(gameObject);
                 Debug.LogError("Singleton of " + (T)this + " is trying to create second instance.. ");

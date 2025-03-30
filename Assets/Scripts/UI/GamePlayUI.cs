@@ -4,33 +4,32 @@ using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
-	public class GamePlayUI : MonoBehaviour
-	{
-		[SerializeField]
-		private TextMeshProUGUI killsText;
-		[SerializeField]
-		private TextMeshProUGUI waveText;
+    public class GamePlayUI : MonoBehaviour
+    {
+        [SerializeField] private TextMeshProUGUI killsText;
+        [SerializeField] private TextMeshProUGUI waveText;
 
-		int waveNumber = 0;
-		int kills = 0;
+        int waveNumber = 0;
+        int kills = 0;
 
-		private EventService eventService;
+        private EventService eventService;
 
-		public void SetService(EventService eventService)
-		{
-			this.eventService = eventService;
-			AddEventListeners();
-		}
-
-		private void AddEventListeners()
-		{
-			eventService.OnGameStart.AddListener(OnGameStart);
-			eventService.StartNextWave.AddListener(UpdateWave);
-			eventService.OnGameStart.AddListener(UpdateWave);
-            eventService.OnEnemyKilled.AddListener(UpdateKills);	
+        public void SetService(EventService eventService)
+        {
+            this.eventService = eventService;
+            AddEventListeners();
         }
 
-        private void OnGameStart(){
+        private void AddEventListeners()
+        {
+            eventService.OnGameStart.AddListener(OnGameStart);
+            eventService.StartNextWave.AddListener(UpdateWave);
+            eventService.OnGameStart.AddListener(UpdateWave);
+            eventService.OnEnemyKilled.AddListener(UpdateKills);
+        }
+
+        private void OnGameStart()
+        {
             waveNumber = 0;
             kills = 0;
             UpdateTexts();
@@ -43,7 +42,8 @@ namespace Assets.Scripts.UI
         }
 
         private void UpdateWave()
-		{   waveNumber++;
+        {
+            waveNumber++;
             UpdateTexts();
         }
 
@@ -54,11 +54,11 @@ namespace Assets.Scripts.UI
         }
 
         private void OnDestroy()
-		{
+        {
             eventService.OnGameStart.RemoveListener(OnGameStart);
             eventService.StartNextWave.RemoveListener(UpdateWave);
-			eventService.OnGameStart.RemoveListener(UpdateWave);
+            eventService.OnGameStart.RemoveListener(UpdateWave);
             eventService.OnEnemyKilled.RemoveListener(UpdateKills);
         }
-	}
+    }
 }

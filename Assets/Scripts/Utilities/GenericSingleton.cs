@@ -12,6 +12,7 @@
                 {
                     instance = new T();
                 }
+
                 return instance;
             }
         }
