@@ -16,12 +16,6 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI highScoreText;
 
         private int highScore;
-        EventService eventService;
-
-        public void SetServices(EventService eventService)
-        {
-            this.eventService = eventService;
-        }
 
         private void Awake()
         {
@@ -45,7 +39,7 @@ namespace Assets.Scripts.UI
         private void PlayGame()
         {
             SoundService.Instance.Play(Sounds.ButtonClick);
-            eventService.OnGameStart.Invoke();
+            EventService.Instance.OnGameStart.Invoke();
             gameObject.SetActive(false);
         }
 

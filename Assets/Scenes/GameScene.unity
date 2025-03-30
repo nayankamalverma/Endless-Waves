@@ -916,7 +916,6 @@ MonoBehaviour:
   enemyParent: {fileID: 1003696235}
   baseEnemyCount: 5
   baseSpawnInterval: 3
-  UIService: {fileID: 404940819}
 --- !u!1 &308877094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1881,7 +1880,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Wave: 1'
+  m_text: 'Wave: 0'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2053,9 +2052,6 @@ MonoBehaviour:
   vfxList:
   - item: {fileID: 6683385348526474697, guid: 6363b800eb26c134782a98c7957fdba2, type: 3}
     parentTransform: {fileID: 1860692014}
-    type: 0
-  - item: {fileID: 0}
-    parentTransform: {fileID: 0}
     type: 0
 --- !u!4 &1166799530
 Transform:
@@ -4287,7 +4283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2005268573
 RectTransform:
   m_ObjectHideFlags: 0

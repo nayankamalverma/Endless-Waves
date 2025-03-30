@@ -13,13 +13,6 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI highScore;
         [SerializeField] private TextMeshProUGUI killsText;
 
-        EventService eventService;
-
-        public void SetServices(EventService eventService)
-        {
-            this.eventService = eventService;
-        }
-
         private void Awake()
         {
             restart.onClick.AddListener(Restart);
@@ -38,12 +31,12 @@ namespace Assets.Scripts.UI
 
         private void Restart()
         {
-            eventService.OnGameStart.Invoke();
+            EventService.Instance.OnGameStart.Invoke();
         }
 
         private void LoadMainMenu()
         {
-            eventService.OnMainMenuButtonClicked.Invoke();
+            EventService.Instance.OnMainMenuButtonClicked.Invoke();
         }
     }
 }

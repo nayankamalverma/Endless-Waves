@@ -17,17 +17,12 @@ namespace Assets.Scripts.UI
 
         private EventService eventService;
 
-
-        public void SetService(EventService eventService)
+        public void Start()
         {
-            this.eventService = eventService;
-            mainMenu.SetServices(eventService);
-            gamePlayUI.SetService(eventService);
-            pauseMenu.SetServices(eventService);
-            scoreManager.SetService(eventService);
-            gameOverMenu.SetServices(eventService);
+            this.eventService = EventService.Instance;
             AddEventListeners();
             waveNumber = 0;
+            gamePlayUI.gameObject.SetActive(false);
         }
 
         private void AddEventListeners()

@@ -11,13 +11,6 @@ namespace Assets.Scripts.UI
         [SerializeField] private Button endGame;
         [SerializeField] private TextMeshProUGUI highScore;
 
-        private EventService eventService;
-
-        public void SetServices(EventService eventService)
-        {
-            this.eventService = eventService;
-        }
-
         private void Awake()
         {
             resume.onClick.AddListener(Resume);
@@ -31,12 +24,12 @@ namespace Assets.Scripts.UI
 
         private void Resume()
         {
-            eventService.OnGameResume.Invoke();
+            EventService.Instance.OnGameResume.Invoke();
         }
 
         private void EndGame()
         {
-            eventService.OnGameOverPauseMenu.Invoke();
+            EventService.Instance.OnGameOverPauseMenu.Invoke();
         }
     }
 }

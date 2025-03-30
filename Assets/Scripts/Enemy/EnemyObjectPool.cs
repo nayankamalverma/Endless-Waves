@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.UI.ScriptableObjects;
+using Assets.Scripts.Utilities.ScriptableObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy

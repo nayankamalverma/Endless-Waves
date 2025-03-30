@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Collections;
-using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities;
+using Assets.Scripts.Utilities.ScriptableObjects;
 
 namespace Assets.Scripts.Enemy
 {
@@ -20,11 +20,12 @@ namespace Assets.Scripts.Enemy
         private int enemyTypeCount;
         private EnemyObjectPool enemyObjectPool;
         private bool IsGamePaused;
+        private float timeForNextWave = 10f;
 
-        public EnemyService(EventService eventService, List<EnemyScriptableObjects> enemyList, Transform enemyParent,
+        public EnemyService(List<EnemyScriptableObjects> enemyList, Transform enemyParent,
             Transform playerTransform)
         {
-            this.eventService = eventService;
+            this.eventService = EventService.Instance;
             this.enemyList = enemyList;
             this.enemyParent = enemyParent;
             this.playerTransform = playerTransform;
@@ -93,7 +94,7 @@ namespace Assets.Scripts.Enemy
 
             if (enemySpawned == enemyCnt)
             {
-                yield return new WaitForSeconds(10f);
+                yield return new WaitForSeconds(timeForNextWave);
                 eventService.StartNextWave.Invoke();
             }
         }

@@ -1,5 +1,5 @@
-using Assets.Scripts.player;
-using Assets.Scripts.UI.ScriptableObjects;
+using Assets.Scripts.Utilities.Events;
+using Assets.Scripts.Utilities.ScriptableObjects;
 using Assets.Scripts.Utilities.VFX;
 using UnityEngine;
 
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Enemy
         private void Attack()
         {
             lastAttackTime = Time.time;
-            enemyService.eventService.OnPlayerHurt.Invoke(enemySO.damage);
+            EventService.Instance.OnPlayerHurt.Invoke(enemySO.damage);
         }
 
         public void TakeDamage()

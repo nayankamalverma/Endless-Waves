@@ -4,22 +4,15 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     private int highScore;
-    EventService eventService;
 
     private void Awake()
     {
         highScore = PlayerPrefs.GetInt("Kills", 0);
     }
 
-    public void SetService(EventService eventService)
+    private void Start()
     {
-        this.eventService = eventService;
-        AddEventListeners();
-    }
-
-    private void AddEventListeners()
-    {
-        eventService.OnGameOver.AddListener(UpdateHighScore);
+        EventService.Instance.OnGameOver.AddListener(UpdateHighScore);
     }
 
     private void SavePrefs()
@@ -34,12 +27,11 @@ public class ScoreManager : MonoBehaviour
             highScore = kills;
             PlayerPrefs.SetInt("Kills", highScore);
         }
-
         SavePrefs();
     }
 
     private void OnDestroy()
     {
-        eventService.OnGameOver.RemoveListener(UpdateHighScore);
+        EventService.Instance.OnGameOver.RemoveListener(UpdateHighScore);
     }
 }

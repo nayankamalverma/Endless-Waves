@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using Assets.Scripts.Enemy;
 using Assets.Scripts.LevelService;
 using Assets.Scripts.player;
-using Assets.Scripts.UI;
-using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities.Events;
+using Assets.Scripts.Utilities.ScriptableObjects;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -26,24 +25,18 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Services
-
-    private EventService EventService;
     private PlayerService PlayerService;
     private EnemyService EnemyService;
     private LevelService LevelService;
-    [SerializeField] private UIService UIService;
 
     #endregion
 
 
     private void Awake()
     {
-        EventService = new EventService();
-        PlayerService = new PlayerService(EventService, playerSO, player);
-        EnemyService = new EnemyService(EventService, enemyList, enemyParent, player.gameObject.transform);
-        LevelService = new LevelService(EventService, baseEnemyCount, baseSpawnInterval);
-
-        UIService.SetService(EventService);
+        PlayerService = new PlayerService(playerSO, player);
+        EnemyService = new EnemyService(enemyList, enemyParent, player.gameObject.transform);
+        LevelService = new LevelService(baseEnemyCount, baseSpawnInterval);
     }
 
     private void OnDestroy()

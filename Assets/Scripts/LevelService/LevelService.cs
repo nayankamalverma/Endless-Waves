@@ -14,9 +14,9 @@ namespace Assets.Scripts.LevelService
 
         private EventService eventService;
 
-        public LevelService(EventService eventService, int enemiesCount, float spawnInterval)
+        public LevelService(int enemiesCount, float spawnInterval)
         {
-            this.eventService = eventService;
+            this.eventService = EventService.Instance;
 
             this.baseEnemyCount = enemiesCount;
             this.baseSpawnInterval = spawnInterval;

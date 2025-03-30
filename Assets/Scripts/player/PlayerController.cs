@@ -1,8 +1,8 @@
 using Assets.Scripts.Utilities.Events;
 using System.Collections;
 using Assets.Scripts.Enemy;
-using Assets.Scripts.UI.ScriptableObjects;
 using Assets.Scripts.Utilities;
+using Assets.Scripts.Utilities.ScriptableObjects;
 using UnityEngine;
 using Assets.Scripts.Utilities.VFX;
 
@@ -21,9 +21,9 @@ namespace Assets.Scripts.player
         private PlayerModel playerModel;
         private EventService eventService;
 
-        public PlayerController(EventService eventService, PlayerScriptableObject playerSO, PlayerView playerView)
+        public PlayerController(PlayerScriptableObject playerSO, PlayerView playerView)
         {
-            this.eventService = eventService;
+            this.eventService = EventService.Instance;
             this.playerView = playerView;
 
             playerView.SetPlayerController(this);

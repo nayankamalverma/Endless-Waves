@@ -9,14 +9,13 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI killsText;
         [SerializeField] private TextMeshProUGUI waveText;
 
-        int waveNumber = 0;
-        int kills = 0;
-
+        private int waveNumber = 0;
+        private int kills = 0;
         private EventService eventService;
 
-        public void SetService(EventService eventService)
+        private void Awake()
         {
-            this.eventService = eventService;
+            this.eventService = EventService.Instance;
             AddEventListeners();
         }
 
@@ -24,7 +23,6 @@ namespace Assets.Scripts.UI
         {
             eventService.OnGameStart.AddListener(OnGameStart);
             eventService.StartNextWave.AddListener(UpdateWave);
-            eventService.OnGameStart.AddListener(UpdateWave);
             eventService.OnEnemyKilled.AddListener(UpdateKills);
         }
 
@@ -32,7 +30,7 @@ namespace Assets.Scripts.UI
         {
             waveNumber = 0;
             kills = 0;
-            UpdateTexts();
+            UpdateWave();
         }
 
         private void UpdateTexts()
@@ -57,7 +55,6 @@ namespace Assets.Scripts.UI
         {
             eventService.OnGameStart.RemoveListener(OnGameStart);
             eventService.StartNextWave.RemoveListener(UpdateWave);
-            eventService.OnGameStart.RemoveListener(UpdateWave);
             eventService.OnEnemyKilled.RemoveListener(UpdateKills);
         }
     }

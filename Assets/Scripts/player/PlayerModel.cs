@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.UI.ScriptableObjects;
+﻿using Assets.Scripts.Utilities.ScriptableObjects;
 
 namespace Assets.Scripts.player
 {
